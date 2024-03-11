@@ -6,6 +6,9 @@ const Router = express.Router();
 import { UserModel } from "../../database/user";
 import passport from "passport";
 
+//Validation
+import { ValidateSignup, ValidateSignin } from "../../validation/auth";
+
 /*
 Route   /signup
 desc    with email and password
@@ -16,9 +19,9 @@ method  post
 
 Router.post("/signup", async (req, res) => {
   try {
-    //checking for already exists
+    await ValidateSignup(req.body.credentials);
 
-    await UserModel.findEmailAndPhone(email, phoneNumber);
+    await UserModel.findEmailAndPhone(req.body.credentials);
 
     //DB
     const newUser = await UserModel.create(req.body.credentials);
@@ -43,6 +46,8 @@ method  post
 */
 Router.post("/signin", async (req, res) => {
   try {
+    await ValidateSignin(req.body.credentials);
+
     //checking for user exists
     const user = await UserModel.findByEmailAndPassword(req.body.credentials);
 
