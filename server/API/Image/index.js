@@ -1,15 +1,20 @@
+require("dotenv").config();
+
 //libraries
 import express from "express";
+import multer from "multer";
 
 //database model
 import { ImageModel } from "../../database/allModels";
 
+//Utilites
+import { s3Upload } from "../../Utils/AWS/s3";
+
 const Router = express.Router();
 
-//Aws s3 bucket config
-const s3Bucket = new AWS.S3({
-  accessKeyId: process.env.AWS_S3_ACCESS_KEY,
-});
+//Multer config
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 /*
 Route   /
@@ -18,9 +23,24 @@ params  none
 access  public
 method  get
 */
-Router.post("/", async (req, res) => {
+Router.post("/", upload.single("file"), async (req, res) => {
   try {
-  } catch (error) {}
+    const file = req.file;
+
+    //s3 bucket options
+    const bucketOptions = {
+      Bucket: "sumu-devtown-zomato",
+      Key: file.originalname,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+      ACL: "public-read",
+    };
+
+    const uploadImage = await s3Upload(bucketOptions);
+    //last line
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 export default Router;

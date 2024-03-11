@@ -4,4 +4,6 @@
 #environment variables
 .env
 
+#others
 package-lock.json
+.babelrc
