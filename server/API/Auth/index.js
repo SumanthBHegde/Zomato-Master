@@ -63,13 +63,12 @@ Router.post("/signin", async (req, res) => {
 });
 
 /*
-/
 Route   /google
 desc    Google signin
 params  none
 access  public
 method  get
-/
+*/
 Router.get(
   "/google",
   passport.authenticate("google", {
@@ -80,13 +79,13 @@ Router.get(
   })
 );
 
-/
+/*
 Route   /google/callback
 desc    Google signin callback
 params  none
 access  public
 method  get
-/
+*/
 Router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
@@ -94,5 +93,5 @@ Router.get(
     return res.json({ token: req.session.passport.user.token });
   }
 );
-*/
+
 export default Router;

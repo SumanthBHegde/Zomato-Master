@@ -1,4 +1,3 @@
-/*
 import googleOAuth from "passport-google-oauth20";
 
 import { UserModel } from "../database/allModels";
@@ -25,19 +24,19 @@ export default (passport) => {
           //check whether user exists
           const user = await UserModel.findOne({ email: newUser.email });
 
+          let token;
           if (user) {
             //generating jwt token
-            const token = user.generateJwtToken();
-
-            //return user
-            done(null, { user, token });
+            token = user.generateJwtToken();
           } else {
             //creating new user
             const user = await UserModel.create(newUser);
-
-            //retutn user
-            done(null, { user, token });
+            //generating jwt token
+            token = user.generateJwtToken();
           }
+
+          //return user
+          done(null, { user, token });
         } catch (error) {
           done(error, null);
         }
@@ -48,4 +47,3 @@ export default (passport) => {
   passport.serializeUser((userData, done) => done(null, { ...userData }));
   passport.deserializeUser((id, done) => done(null, id));
 };
-*/
