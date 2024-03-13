@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../Components/Navbar";
 import FoodTab from "../Components/FoodTab";
 
-function HomeLayout({ props, children }) {
+function HomeLayout({ children }) {
   return (
     <div>
       <Navbar />
