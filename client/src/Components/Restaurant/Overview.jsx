@@ -9,6 +9,7 @@ import { NextArrow, PrevArrow } from "../carouselArrow";
 import MenuCollection from "./MenuCollection";
 import MenuSimilarRestaurantCard from "./MenuSimilarRestaurantCard";
 import ReviewCard from "./Reviews/ReviewCard";
+import MapView from "./Mapview";
 
 function Overview() {
   // State for menu images, reviews, cuisine, and average cost
@@ -111,66 +112,48 @@ function Overview() {
               </span>
             ))}
           </div>
-          {/* Average cost section */}
-          <div className="my-4">
-            <h4 className="text-lg font-medium">Average Cost</h4>
-            <h6>${averageCost} for one order (approx.)</h6>
-            <small className="text-gray-500">
-              Exclusive of applicable taxes and charges, if any
-            </small>
-          </div>
-          {/* Similar restaurants section */}
-          <div className="my-4">
-            <h4 className="text-lg font-medium">Similar Restaurants</h4>
-            <div>
-              <Slider {...settings}>
-                {/* Render similar restaurant cards */}
-                <MenuSimilarRestaurantCard
-                  image="https://b.zmtcdn.com/data/pictures/chains/3/307893/69f1fa33c357f755f7021b7e35d59380.jpg"
-                  title="tea"
-                />
-                <MenuSimilarRestaurantCard
-                  image="https://b.zmtcdn.com/data/pictures/chains/3/307893/69f1fa33c357f755f7021b7e35d59380.jpg"
-                  title="tea"
-                />
-                <MenuSimilarRestaurantCard
-                  image="https://b.zmtcdn.com/data/pictures/chains/3/307893/69f1fa33c357f755f7021b7e35d59380.jpg"
-                  title="tea"
-                />
-                <MenuSimilarRestaurantCard
-                  image="https://b.zmtcdn.com/data/pictures/chains/3/307893/69f1fa33c357f755f7021b7e35d59380.jpg"
-                  title="tea"
-                />
-                <MenuSimilarRestaurantCard
-                  image="https://b.zmtcdn.com/data/pictures/chains/3/307893/69f1fa33c357f755f7021b7e35d59380.jpg"
-                  title="tea"
-                />
-                <MenuSimilarRestaurantCard
-                  image="https://b.zmtcdn.com/data/pictures/chains/3/307893/69f1fa33c357f755f7021b7e35d59380.jpg"
-                  title="tea"
-                />
-              </Slider>
+          <div className="flex flex-col-reverse">
+            {/* Rate your delivery experience */}
+            <div className="my-4">
+              <h4 className="text-lg font-medium">
+                Rate your delivery experience
+              </h4>
+              {/* ReactStars component */}
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={24}
+                activeColor="#ffd700"
+              />
+              {/* Map over reviews and render ReviewCard */}
+              {reviews.map((review, index) => (
+                <ReviewCard {...review} key={index} />
+              ))}
             </div>
-          </div>
-          {/* Delivery rating and reviews section */}
-          <div className="my-4">
-            <h4 className="text-lg font-medium">
-              Rate your delivery experience
-            </h4>
-            <ReactStars
-              count={5}
-              onChange={ratingChanged}
-              size={24}
-              activeColor="#ffd700"
-            />
-            {/* Render reviews */}
-            {reviews.map((review, index) => (
-              <ReviewCard {...review} key={index} />
-            ))}
-          </div>
-          {/* Map section - hidden on small screens */}
-          <div className="my-4 w-full md:hidden flex flex-col gap-4">
-            ...Map Stuff
+            {/* Similar Restaurants */}
+            <div className="my-4">
+              <h4 className="text-lg font-medium">Similar Restaurants</h4>
+              <div>
+                {/* Slider component with MenuSimilarRestaurantCard */}
+                <Slider {...settings}>
+                  <MenuSimilarRestaurantCard
+                    image="https://b.zmtcdn.com/data/pictures/chains/3/307893/69f1fa33c357f755f7021b7e35d59380.jpg"
+                    title="tea"
+                  />
+                  {/* More MenuSimilarRestaurantCard components */}
+                </Slider>
+              </div>
+            </div>
+            {/* Mobile MapView */}
+            <div className="my-4 w-full md:hidden flex flex-col gap-4">
+              {/* Render MapView component */}
+              <MapView
+                title="McDonald's"
+                phno="+919234345634"
+                mapLocation={getLatLong("28.64435706075414, 77.11929960209767")}
+                address="Shop 52, Plot 8, 9 & 10, G-8, Ground Floor, DDA Market, J-Block, Community Centre, Rajouri Garden, New Delhi"
+              />
+            </div>
           </div>
         </div>
         {/* Aside section - sticky on medium and large screens */}
@@ -178,7 +161,12 @@ function Overview() {
           style={{ height: "fit-content" }}
           className="hidden md:flex md:w-4/12 sticky rounded-xl top-10 bg-white p-3 shadow-md flex-col gap-4"
         >
-          ...Map Stuff
+          <MapView
+            title="McDonald's"
+            phno="+919234345634"
+            mapLocation={getLatLong("28.64435706075414, 77.11929960209767")}
+            address="Shop 52, Plot 8, 9 & 10, G-8, Ground Floor, DDA Market, J-Block, Community Centre, Rajouri Garden, New Delhi"
+          />
         </aside>
       </div>
     </>
