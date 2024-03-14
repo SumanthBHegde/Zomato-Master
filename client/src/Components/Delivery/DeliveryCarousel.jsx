@@ -3,7 +3,7 @@ import Slider from "react-slick"; // Importing Slider component from react-slick
 
 // components
 import DeliveryCategory from "./DeliveryCategory"; // Importing DeliveryCategory component
-import { NextArrow, PrevArrow } from "../carousalArrow"; // Importing NextArrow and PrevArrow components
+import { NextArrow, PrevArrow } from "../carouselArrow"; // Importing NextArrow and PrevArrow components
 
 function DeliveryCarousel() {
   // Array containing food categories with image and title
