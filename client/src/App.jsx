@@ -10,18 +10,51 @@ import RestaurantLayoutHoc from "./HOC/Restaurant.HOC";
 import HomePage from "./Pages/HomePage";
 import RestaurantPage from "./Pages/RestaurantPage";
 
+//Components
+import Overview from "./Components/Restaurant/Overview";
+
 function App() {
   return (
     <>
-      <Redirect from="/" to="/delivery" />
+      <Redirect exact from="/" to="/delivery" />
       <HomeLayoutHoc path="/:type" exact component={HomePage} />
       <RestaurantLayoutHoc
         path="/restaurant/:id"
         exact
         component={RestaurantPage}
       />
+      <RestaurantLayoutHoc
+        path="/restaurant/:id/overview"
+        exact
+        component={Overview}
+      />
+      <RestaurantLayoutHoc
+        path="/restaurant/:id/order-online"
+        exact
+        component={HomePage}
+      />
+      <RestaurantLayoutHoc
+        path="/restaurant/:id/reviews"
+        exact
+        component={HomePage}
+      />
+      <RestaurantLayoutHoc
+        path="/restaurant/:id/menu"
+        exact
+        component={HomePage}
+      />
+      <RestaurantLayoutHoc
+        path="/restaurant/:id/photos"
+        exact
+        component={HomePage}
+      />
     </>
   );
 }
 
 export default App;
+/* Alernative redirect
+      <Route path="/" exact>
+        <Redirect to="/delivery" />
+      </Route>
+*/
