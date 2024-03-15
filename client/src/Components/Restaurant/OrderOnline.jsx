@@ -1,40 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineCompass } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
+
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { getFoodList } from "../../Redux/Reducers/Food/food.action";
 
 // Components
 import FloatMenuBtn from "./Order-Online/FloatMenuBtn";
 import MenuListContainer from "./Order-Online/MenuListContainer";
+import FoodList from "./Order-Online/FoodList";
 
 function OrderOnline() {
   // State to manage menu items and selected menu
-  const [menu, setMenu] = useState([
-    {
-      name: "Recommended",
-      items: [],
-    },
-    {
-      name: "Momos",
-      items: [],
-    },
-    {
-      name: "Chinese Starters",
-      items: [],
-    },
-    {
-      name: "Breads",
-      items: [],
-    },
-    {
-      name: "Rice and Biryani",
-      items: [],
-    },
-    {
-      name: "Rolls",
-      items: [],
-    },
-  ]);
-  const [selected, setSelected] = useState("Recommended");
+  const [menu, setMenu] = useState([]);
+  const [selected, setSelected] = useState("");
 
   // Function to handle menu item selection
   const onClickHandler = (e) => {
@@ -43,6 +23,20 @@ function OrderOnline() {
     }
     return;
   };
+
+  //redux dispatch
+  const dispatch = useDispatch();
+
+  const reduxState = useSelector(
+    (globalState) => globalState.restaurant.selectedRestaurant.restaurant
+  );
+
+  useEffect(() => {
+    reduxState &&
+      dispatch(getFoodList(reduxState.menu)).then((data) => {
+        setMenu(data.payload.menus.menus);
+      });
+  }, [reduxState]);
 
   return (
     <>
@@ -69,7 +63,9 @@ function OrderOnline() {
           </div>
           {/* Section for displaying food items */}
           <section className="flex h-screen overflow-y-scroll flex-col gap-3 md:gap-5">
-            {/* Food lists */}
+            {menu.map((item, index) => (
+              <FoodList key={index} {...item} />
+            ))}
           </section>
         </div>
       </div>

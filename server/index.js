@@ -23,11 +23,22 @@ import Reviews from "./API/Reviews";
 import ConnectDB from "./database/connection";
 
 const zomato = express();
+const session = require("express-session");
 
 zomato.use(express.json());
 zomato.use(express.urlencoded({ extended: false }));
 zomato.use(helmet());
 zomato.use(cors());
+
+// **Added `express-session` middleware:**
+zomato.use(
+  session({
+    secret: process.env.MY_SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
 zomato.use(passport.initialize());
 zomato.use(passport.session());
 

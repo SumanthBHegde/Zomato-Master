@@ -19,7 +19,7 @@ method  get
 */
 Router.get("/", async (req, res) => {
   try {
-    await ValidateRestaurantCity(req.query);
+    //await ValidateRestaurantCity(req.query);
 
     const { city } = req.query;
     const restaurants = await RestaurantModel.find({ city });

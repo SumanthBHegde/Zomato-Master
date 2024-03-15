@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TiStarFullOutline } from "react-icons/ti";
 import dayjs from "dayjs";
 
+// Redux
+import { useDispatch } from "react-redux";
+import { getUser } from "../../../Redux/Reducers/User/user.action";
+
 function ReviewCard(props) {
   // State for the user name
-  const [user, setUser] = useState("Aditya Gusain");
+  const [user, setUser] = useState("Sumu");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (props) {
+      dispatch(getUser(props.user)).then((data) => {
+        setUser(data.payload.user.fullName);
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -24,7 +38,7 @@ function ReviewCard(props) {
             </div>
             {/* User details */}
             <div className="flex flex-col">
-              <h3 className="text-lg font-semibold">{props.fullName}</h3>{" "}
+              <h3 className="text-lg font-semibold">{user}</h3>
               {/* User full name */}
               <small className="text-gray-500">
                 5 Reviews &#8226; 3 Followers{" "}
@@ -33,7 +47,7 @@ function ReviewCard(props) {
             </div>
           </div>
           {/* Follow button */}
-          <button className="text-zomato-400 border border-zomato-400 py-2 rounded-lg px-4">
+          <button className="text-zomato-300 border border-zomato-400 py-2 rounded-lg px-4">
             Follow
           </button>
         </div>

@@ -7,7 +7,7 @@ function ImageGrid(props) {
       {/* Mobile Image */}
       <div className="w-full h-60 md:hidden">
         <img
-          src={props.images.length && props.images[0]} // Displaying the first image in the array
+          src={props.images.length && props.images[0].location} // Displaying the first image in the array
           alt="restaurant"
           className="w-full h-full object-cover object-center rounded-lg" // Image styling
         />
@@ -17,7 +17,7 @@ function ImageGrid(props) {
         {/* First Image */}
         <div className="w-full h-full overflow-hidden rounded-lg">
           <img
-            src={props.images.length && props.images[0]} // Displaying the first image in the array
+            src={props.images.length && props.images[0].location} // Displaying the first image in the array
             alt="restaurant"
             className="w-full h-full object-cover object-center transform transition duration-700 hover:scale-110" // Image styling with hover effect
           />
@@ -26,7 +26,7 @@ function ImageGrid(props) {
         <div className="w-1/4 h-full flex flex-col gap-1 overflow-hidden">
           <div className="w-full h-2/4 overflow-hidden rounded-lg">
             <img
-              src={props.images.length && props.images[1]} // Displaying the second image in the array
+              src={props.images.length && props.images[1].location} // Displaying the second image in the array
               alt="restaurant"
               className="w-full h-full object-cover object-center rounded-lg transform transition duration-700 hover:scale-110" // Image styling with hover effect
             />
@@ -34,7 +34,7 @@ function ImageGrid(props) {
           {/* Third Image */}
           <div className="w-full h-2/4 overflow-hidden rounded-lg">
             <img
-              src={props.images.length && props.images[2]} // Displaying the third image in the array
+              src={props.images.length && props.images[2].location} // Displaying the third image in the array
               alt="restaurant"
               className="h-full object-cover object-center rounded-lg transform transition duration-700 hover:scale-110" // Image styling with hover effect
             />
@@ -44,7 +44,7 @@ function ImageGrid(props) {
         <div className="w-1/4 h-full flex flex-col gap-1 overflow-hidden">
           <div className="w-full h-2/4 relative">
             <img
-              src={props.images.length && props.images[3]} // Displaying the fourth image in the array
+              src={props.images.length && props.images[3].location} // Displaying the fourth image in the array
               alt="restaurant"
               className="w-full h-full object-cover rounded-lg" // Image styling
             />
@@ -58,7 +58,7 @@ function ImageGrid(props) {
           {/* Fifth Image */}
           <div className="w-full h-2/4 relative">
             <img
-              src={props.images.length && props.images[4]} // Displaying the fifth image in the array
+              src={props.images.length && props.images[4].location} // Displaying the fifth image in the array
               alt="restaurant"
               className="w-full h-full object-cover rounded-lg" // Image styling
             />
