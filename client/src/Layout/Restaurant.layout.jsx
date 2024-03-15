@@ -52,7 +52,7 @@ function RestaurantLayout({ children }) {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-4 mt-8 lg:px-20 pb-10">
+      <div className="container px-4 pb-20 mx-auto mt-8 lg:px-20">
         <ImageGrid images={restaurant.images} />
         <RestaurantInfo
           name={restaurant?.name}
@@ -61,7 +61,7 @@ function RestaurantLayout({ children }) {
           cuisine={restaurant?.cuisine}
           address={restaurant?.address}
         />
-        <div className="my-4 flex flex-wrap gap-3 mx-auto">
+        <div className="flex flex-wrap gap-3 mx-auto my-4">
           <InfoButton isActive={true}>
             <TiStarOutline /> Add Review
           </InfoButton>

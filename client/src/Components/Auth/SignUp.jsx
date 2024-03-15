@@ -2,6 +2,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
+// redux
+import { useDispatch } from "react-redux";
+import { signUp } from "../../Redux/Reducers/Auth/auth.action";
+
 function Signup({ isOpen, setIsOpen }) {
   // State to manage user input data
   const [userData, setUserData] = useState({
@@ -9,6 +13,8 @@ function Signup({ isOpen, setIsOpen }) {
     password: "",
     fullName: "",
   });
+
+  const dispatch = useDispatch();
 
   // Function to handle changes in input fields
   const handleChange = (e) => {
@@ -18,6 +24,12 @@ function Signup({ isOpen, setIsOpen }) {
   // Function to close the sign-up modal
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const submit = () => {
+    dispatch(signUp(userData));
+    setUserData({ email: "", password: "", fullName: "" });
+    closeModal();
   };
 
   // Function to initiate Google sign-up process
@@ -74,10 +86,10 @@ function Signup({ isOpen, setIsOpen }) {
                 ></Dialog.Title>
 
                 {/* Sign-up options */}
-                <div className="mt-2 flex flex-col gap-3 w-full">
+                <div className="flex flex-col w-full gap-3 mt-2">
                   {/* Sign up with Google button */}
                   <button
-                    className="py-2 justify-center rounded-lg flex items-center gap-2 w-full border border-gray-400 bg-white text-gray-700 hover:bg-gray-100"
+                    className="flex items-center justify-center w-full gap-2 py-2 text-gray-700 bg-white border border-gray-400 rounded-lg hover:bg-gray-100"
                     onClick={googleSignUp}
                   >
                     Sign Up With Google <FcGoogle />
@@ -86,7 +98,7 @@ function Signup({ isOpen, setIsOpen }) {
                   {/* Sign-up form */}
                   <form className="flex flex-col gap-2">
                     {/* Full name input field */}
-                    <div className="w-full flex flex-col gap-2">
+                    <div className="flex flex-col w-full gap-2">
                       <label htmlFor="fullName">Full Name</label>
                       <input
                         type="text"
@@ -94,12 +106,12 @@ function Signup({ isOpen, setIsOpen }) {
                         value={userData.fullName}
                         onChange={handleChange}
                         placeholder="John Doe"
-                        className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:border-zomato-400"
+                        className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-zomato-400"
                       />
                     </div>
 
                     {/* Email input field */}
-                    <div className="w-full flex flex-col gap-2">
+                    <div className="flex flex-col w-full gap-2">
                       <label htmlFor="email">Email</label>
                       <input
                         type="text"
@@ -107,12 +119,12 @@ function Signup({ isOpen, setIsOpen }) {
                         value={userData.email}
                         onChange={handleChange}
                         placeholder="user@email.com"
-                        className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:border-zomato-400"
+                        className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-zomato-400"
                       />
                     </div>
 
                     {/* Password input field */}
-                    <div className="w-full flex flex-col gap-2 mb-3">
+                    <div className="flex flex-col w-full gap-2 mb-3">
                       <label htmlFor="password">Password</label>
                       <input
                         type="password"
@@ -120,14 +132,14 @@ function Signup({ isOpen, setIsOpen }) {
                         value={userData.password}
                         onChange={handleChange}
                         placeholder="**********"
-                        className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:border-zomato-400"
+                        className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-zomato-400"
                       />
                     </div>
 
                     {/* Sign-up button */}
                     <div
-                      className="w-full text-center bg-zomato-400 text-white py-2 rounded-lg"
-                      onClick={closeModal}
+                      className="w-full py-2 text-center text-white rounded-lg bg-zomato-400"
+                      onClick={submit}
                     >
                       Sign Up
                     </div>

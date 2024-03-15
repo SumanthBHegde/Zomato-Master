@@ -2,12 +2,19 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
+// redux
+import { useDispatch } from "react-redux";
+import { signIn } from "../../Redux/Reducers/Auth/auth.action";
+
 function Signin({ isOpen, setIsOpen }) {
   // State to manage user input data
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+
+  //init dispatch
+  const dispatch = useDispatch();
 
   // Function to handle changes in input fields
   const handleChange = (e) => {
@@ -17,6 +24,13 @@ function Signin({ isOpen, setIsOpen }) {
   // Function to close the sign-in modal
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  //submit option
+  const submit = () => {
+    dispatch(signIn(userData));
+    setUserData({ email: "", password: "" });
+    closeModal();
   };
 
   // Function to initiate Google sign-in process
@@ -73,10 +87,10 @@ function Signin({ isOpen, setIsOpen }) {
                 ></Dialog.Title>
 
                 {/* Form for sign-in */}
-                <div className="mt-2 flex flex-col gap-3 w-full">
+                <div className="flex flex-col w-full gap-3 mt-2">
                   {/* Sign in with Google button */}
                   <button
-                    className="py-2 justify-center rounded-lg flex items-center gap-2 w-full border border-gray-400 bg-white text-gray-700 hover:bg-gray-100"
+                    className="flex items-center justify-center w-full gap-2 py-2 text-gray-700 bg-white border border-gray-400 rounded-lg hover:bg-gray-100"
                     onClick={googleSignIn}
                   >
                     Sign In With Google <FcGoogle />
@@ -85,7 +99,7 @@ function Signin({ isOpen, setIsOpen }) {
                   {/* Sign-in form */}
                   <form className="flex flex-col gap-2">
                     {/* Email input field */}
-                    <div className="w-full flex flex-col gap-2">
+                    <div className="flex flex-col w-full gap-2">
                       <label htmlFor="email">Email</label>
                       <input
                         type="text"
@@ -93,12 +107,12 @@ function Signin({ isOpen, setIsOpen }) {
                         value={userData.email}
                         onChange={handleChange}
                         placeholder="user@email.com"
-                        className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:border-zomato-400"
+                        className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-zomato-400"
                       />
                     </div>
 
                     {/* Password input field */}
-                    <div className="w-full flex flex-col gap-2 mb-3">
+                    <div className="flex flex-col w-full gap-2 mb-3">
                       <label htmlFor="password">Password</label>
                       <input
                         type="password"
@@ -106,14 +120,14 @@ function Signin({ isOpen, setIsOpen }) {
                         value={userData.password}
                         onChange={handleChange}
                         placeholder="**********"
-                        className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:border-zomato-400"
+                        className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-zomato-400"
                       />
                     </div>
 
                     {/* Sign-in button */}
                     <div
-                      className="w-full text-center bg-zomato-400 text-white py-2 rounded-lg"
-                      onClick={closeModal}
+                      className="w-full py-2 text-center text-white rounded-lg bg-zomato-400"
+                      onClick={submit}
                     >
                       Sign In
                     </div>

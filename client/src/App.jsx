@@ -1,6 +1,7 @@
+import React, { useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Redirect } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 // Hoc
 import HomeLayoutHoc from "./HOC/Home.HOC";
@@ -9,8 +10,10 @@ import CheckoutLayoutHoc from "./HOC/Checkout.HOC";
 
 // Pages
 import HomePage from "./Pages/HomePage";
-import RestaurantPage from "./Pages/RestaurantPage";
+//import RestaurantPage from "./Pages/RestaurantPage";
 import Checkout from "./Pages/CheckoutPage";
+import GoogleAuth from "./Pages/GoogleAuth";
+import RedirectRestaurant from "./Pages/Restaurant/Redirect";
 
 //Components
 import Overview from "./Components/Restaurant/Overview";
@@ -19,12 +22,23 @@ import Reviews from "./Components/Restaurant/Reviews/Reviews";
 import Menu from "./Components/Restaurant/Menu/Menu";
 import Photos from "./Components/Restaurant/Photos/Photos";
 
+// redux
+import { useDispatch } from "react-redux";
+import { getMySelf } from "./Redux/Reducers/User/user.action";
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMySelf());
+  }, [localStorage]);
+
   return (
     <>
       <Redirect exact from="/" to="/delivery" />
+      <Route path="/restaurant/:id" exact component={RedirectRestaurant} />
       <HomeLayoutHoc path="/:type" exact component={HomePage} />
-      <RestaurantLayoutHoc path="/restaurant/:id" exact component={Redirect} />
+      <HomeLayoutHoc path="/google/:token" exact component={GoogleAuth} />
       <RestaurantLayoutHoc
         path="/restaurant/:id/overview"
         exact

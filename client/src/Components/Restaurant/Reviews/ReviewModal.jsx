@@ -3,7 +3,12 @@ import { Fragment, useState } from "react";
 import Rating from "react-rating-stars-component";
 import { useParams } from "react-router-dom";
 
+// redux
+import { useDispatch } from "react-redux";
+import { postReview } from "../../../Redux/Reducers/Review/review.action";
+
 export default function ReviewModal({ isOpen, setIsOpen, ...props }) {
+  const dispatch = useDispatch();
   // State to manage review data
   const [reviewData, setReviewData] = useState({
     subject: "",
@@ -47,6 +52,18 @@ export default function ReviewModal({ isOpen, setIsOpen, ...props }) {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const submit = () => {
+    dispatch(postReview({ ...reviewData, restaurant: id }));
+    setReviewData({
+      subject: "",
+      reviewText: "",
+      isRestaurantReview: false,
+      isFoodReview: false,
+      reting: 0,
+    });
+    closeModal();
+  };
 
   return (
     <>
@@ -98,7 +115,7 @@ export default function ReviewModal({ isOpen, setIsOpen, ...props }) {
                 </Dialog.Title>
 
                 {/* Review form */}
-                <div className="mt-2 flex flex-col gap-4">
+                <div className="flex flex-col gap-4 mt-2">
                   <div className="flex items-center gap-3">
                     {/* Radio buttons for review type */}
                     <div className="flex items-center gap-2">
@@ -132,7 +149,7 @@ export default function ReviewModal({ isOpen, setIsOpen, ...props }) {
 
                   {/* Form inputs */}
                   <form className="flex flex-col gap-4">
-                    <div className="w-full flex flex-col gap-2">
+                    <div className="flex flex-col w-full gap-2">
                       <label htmlFor="subject">Subject</label>
                       <input
                         type="text"
@@ -140,10 +157,10 @@ export default function ReviewModal({ isOpen, setIsOpen, ...props }) {
                         placeholder="amazing food"
                         value={reviewData.subject}
                         onChange={handleChange}
-                        className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:outline-none focus:border-zomato-400"
+                        className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:border-zomato-400"
                       />
                     </div>
-                    <div className="w-full flex flex-col gap-2">
+                    <div className="flex flex-col w-full gap-2">
                       <label htmlFor="reviewText">Review Text</label>
                       <textarea
                         id="reviewText"
@@ -151,7 +168,7 @@ export default function ReviewModal({ isOpen, setIsOpen, ...props }) {
                         placeholder="Type your review ..."
                         value={reviewData.reviewText}
                         onChange={handleChange}
-                        className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:outline-none focus:border-zomato-400"
+                        className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:border-zomato-400"
                       />
                     </div>
                   </form>
@@ -162,7 +179,7 @@ export default function ReviewModal({ isOpen, setIsOpen, ...props }) {
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={closeModal}
+                    onClick={submit}
                   >
                     Submit
                   </button>

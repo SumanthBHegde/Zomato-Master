@@ -23,7 +23,7 @@ function ReviewCard(props) {
   return (
     <>
       {/* Container for the review card */}
-      <div className="my-3 flex flex-col gap-3">
+      <div className="flex flex-col gap-3 my-3">
         {/* Header section */}
         <div className="flex items-center justify-between">
           {/* User avatar and details */}
@@ -33,7 +33,7 @@ function ReviewCard(props) {
               <img
                 src="https://b.zmtcdn.com/data/pictures/chains/3/307893/ac9e6b3236967e1e255e14e24cc0c9e7.jpg" // Avatar image source
                 alt="avatar"
-                className="w-full h-full rounded-full object-cover"
+                className="object-cover w-full h-full rounded-full"
               />
             </div>
             {/* User details */}
@@ -47,7 +47,7 @@ function ReviewCard(props) {
             </div>
           </div>
           {/* Follow button */}
-          <button className="text-zomato-300 border border-zomato-400 py-2 rounded-lg px-4">
+          <button className="px-4 py-2 border rounded-lg text-zomato-300 border-zomato-400">
             Follow
           </button>
         </div>
@@ -55,11 +55,11 @@ function ReviewCard(props) {
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             {/* Star rating */}
-            <span className="text-white text-xs bg-green-700 px-2 py-1 rounded-lg flex items-center gap-1">
-              3 <TiStarFullOutline /> {/* Star icon */}
+            <span className="flex items-center gap-1 px-2 py-1 text-xs text-white bg-green-700 rounded-lg">
+              {props.rating} <TiStarFullOutline /> {/* Star icon */}
             </span>
             {/* Review type and date */}
-            <h5 className="font-regular uppercase">
+            <h5 className="uppercase font-regular">
               {props.isRestaurantReview ? "Dining" : "Delivery"}{" "}
               {/* Review type */}
             </h5>
@@ -69,7 +69,7 @@ function ReviewCard(props) {
           </div>
           {/* Review text */}
           <div className="w-full">
-            <p className="w-full text-gray-600 font-light text-base">
+            <p className="w-full text-base font-light text-gray-600">
               {props.reviewText} {/* Review content */}
             </p>
           </div>
